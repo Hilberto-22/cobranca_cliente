@@ -1,0 +1,18 @@
+.card{
+    /* padding-top:12px; */
+    margin-left: 15px;
+    margin-right: 15px;
+}
+.alert{
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-top: 5px;
+}
+.link-card{
+    float: right;
+    padding: 0px ;
+}
+.titulo-card{
+    float: left;
+    padding-top: 2px;
+}

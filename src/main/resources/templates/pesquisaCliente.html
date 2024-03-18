@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html 
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout.html}">
+
+<head>
+    <title>Pesquisa de Cliente</title>
+</head>
+<section layout:fragment="conteudo">
+    <div class="card mt-3">
+        <div class="card-header">
+            <div class="clearfix">
+                <h5 class="card-title titulo-card">Pesquisa de Cliente</h5>
+                <a class="btn btn-link link-card" href="/clientes/novo">Novo Cliente</a>
+            </div>
+        </div>
+
+        <div class="car-body">
+            <div class="table-responsive mt-3 mb-3">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th class="text-center col-md-1">#</th>
+                            <th>Nome do Cliente</th>
+                            <th class="text-center col-md-2">Data de vencimento</th>
+                            <th class="text-right col-md-2">Valor</th>
+                            <th class="text-center col-md-2">Status</th>
+                            <th class="text-center col-md-1">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="cliente : ${clientes}">
+                            <td class="text-center" th:text="${cliente.codigo}"></td>
+                            <td th:text="${cliente.nomeCliente}"></td>
+                            <td class="text-center" th:text="${{cliente.dataVencimento}}"></td>
+                            <td class="text-right" th:text="|R$ ${{cliente.valor}}|"></td>
+                            <td class="text-center">
+                                <span class="text   " th:text="${cliente.status.descricao}"
+                                    th:class="${#strings.toString(cliente.status) == 'PENDENTE' ? 'rounded-lg text-white bg-danger' : 'rounded-lg text-white bg-success'}"></span>
+                            </td>
+                            <td class="text-center"> 
+                                <a class="btn btn-warning" data-toggle="modal" data-target="#confirmacaoExclusaoModal" 
+                                        th:attr = "data-codigo=${cliente.codigo}">
+                                    <i class="bi bi-eyedropper"></i>
+                                </a>
+                                <a class="btn btn-danger">
+                                    <i class="bi bi-trash3-fill"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="6" th:if="${#lists.isEmpty(clientes)}">Nenhum cliente foi encontrado</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns: th="htpp://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout.html}">
+
+<head>
+    <title>Cadastro de Cliente</title>
+</head>
+<section layout:fragment="conteudo">
+    <form method="POST" action="/clientes/salvar" th:object="${cliente}">
+        <div class="alert alert-success" th:if="${!#strings.isEmpty(mensagem)}">
+            <span th:text="${mensagem}"></span>
+        </div>
+
+        <div class="alert alert-danger" th:if="${#fields.hasErrors()}">
+            <div th:each="detailedError : ${#fields.detailedErrors()}">
+                <span th:text="${detailedError.message}"></span>
+            </div>
+        </div>
+
+
+        <div class="card mt-3">
+            <div class="card-header">
+                <div class="clearfix">
+                    <h5 class="card-title titulo-card">Novo Cliente</h5>
+                    <a class="btn btn-link link-card" href="/clientes/listarClientes">Listar clientes</a>
+                </div>
+            </div>
+            <div class="card-body">
+                <input type="hidden" th:field="*{codigo}">
+                <div class="form-group">
+                    <label for="nomeCliente" class="col-sm-2 col-form-label mr-5">Cliente</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="nomeCliente" th:field="*{nomeCliente}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="dataVencimento" class="col-sm-2 col-form-label">Data de Vencimento</label>
+                    <div class="col-sm-2">
+                        <input type="date" class="form-control" id="dataVencimento" th:field="*{dataVencimento}">
+                    </div>
+                </div>
+                <div class="form-group" th:classappend="${#fields.hasErrors('valor')} ? has-error">
+                    <label for="valor" class="col-sm-2 col-form-label">Valor</label>
+                    <div class="col-sm-2">
+                        <input type="text" class="form-control" id="valor" th:field="*{valor}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="status" class="col-sm-2 col-form-label">Status</label>
+                    <div class="col-sm-2">
+                        <select class="form-control" name="status">
+                            <option th:each="tipoStatus : ${status}" th:value="${tipoStatus}" th:text="${tipoStatus.descricao}"></option>
+                            
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" id="btnSalvar" class="btn btn-primary">Salvar</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</section>
+</html>
